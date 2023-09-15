@@ -35,8 +35,8 @@ fn run(terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> Result<(), Box<dyn 
     let mut input: Option<Event> = None;
     let mut text_edit_binding = TextEdit::default();
     let mut text_edit = text_edit_binding
-        .text(Text::from("Hello World"))
-        .cursor(0);
+        .text("Hello World!")
+        .cursor(0,0);
     loop {
         if event::poll(Duration::from_millis(100))? {
             input = Some(event::read().unwrap());
