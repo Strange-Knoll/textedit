@@ -33,9 +33,9 @@ fn restore_terminal(
 fn run(terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> Result<(), Box<dyn Error>> {
     //buttons need this to be here so that they function properly
     let mut input: Option<Event> = None;
-    let mut text_edit_binding = TextEdit::default();
+    let mut text_edit_binding = TextEdit::default()
+        .text("Hello World!".to_owned());
     let mut text_edit = text_edit_binding
-        .text("Hello World!")
         .cursor(0,0);
     loop {
         if event::poll(Duration::from_millis(100))? {
