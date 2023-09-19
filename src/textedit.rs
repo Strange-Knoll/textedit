@@ -3,6 +3,28 @@ use std::io::BufRead;
 use crossterm::event::{Event, KeyCode};
 use ratatui::{prelude::*, widgets::{StatefulWidget, Paragraph, Widget, Wrap}};
 
+
+fn span_content_from_line(line:Line) -> String{
+    let mut text = String::new();
+    for span in line.spans{
+        text.push_str(&span.content);
+    }
+    text
+}
+
+fn what_span_am_i_in(line:Line, cursor_x: usize) -> usize{ 
+    let spans = line.spans.clone();
+    let mut sum_width = 0;
+    for (i, span) in spans.iter().enumerate(){
+        sum_width += span.width();
+        if sum_width > cursor_x{
+            return i;
+        }
+    }
+    return spans.len() - 1;
+} 
+
+
 #[derive(Clone)]
 pub struct TextEdit<'a>{
     text: Text<'a>,
@@ -51,7 +73,13 @@ impl<'a> TextEdit<'a>{
                         let text_before_cursor = text[..self.cursor.0].to_string();
                         let text_after_cursor = text[self.cursor.0..].to_string();
                         self.text.lines[self.cursor.1] = Line::from(vec![Span::raw(text_before_cursor)]);
-                        self.text.lines.insert(self.cursor.1 + 1, Line::from(vec![Span::raw(text_after_cursor)]));
+                        self.text.lines.insert(self.cursor.1 + 1, 
+                            if text_after_cursor.len() > 0{ 
+                                Line::from(vec![Span::raw(text_after_cursor)])
+                            }else{
+                                Line::from(vec![Span::raw(" ")])
+                            }
+                        );
                         self.cursor.1 += 1;
                         self.cursor.0 = 0;
                     }
