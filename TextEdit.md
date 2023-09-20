@@ -71,19 +71,5 @@ Line(
 	span3( !!!))
 ```
 
-
-
-~~i think in can do it by tracking the widths of the original spans and reconstruct the line by applying the copied spans selectively like 
-```
-line = Line(span(hello ), span(world))
-widths = [6, 5]
-string = line_to_string(line) //hello world
-
-// do some facny logic to sort out where the cursor is
-// we get to ...
-new_line = Line(span(Hel), span(l), span(o world))
-for span in line.spans{
-	// some logic that 
-}
-```
-
+##### How the ~~fuck~~ do i do backspace and delete?
+right so l have a line with 3 spans like previous examples, i need to delete the character behind the cursor, so i need to know what span and where in that span i am. 

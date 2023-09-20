@@ -47,7 +47,7 @@ fn run(terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> Result<(), Box<dyn 
         match input.clone() {
 
             Some(Event::Key(key)) => {
-                if KeyCode::Char('q') == key.code {
+                if KeyCode::Esc == key.code {
                     break;
                 }
             }
